@@ -1,3 +1,34 @@
+// Maintenant on vas passer notre model creer preablement dans le dossier models et le fichier user 
+// On vas donc mettre des sécurités en utilisant deux modules spécifique
+// 1 bcrypt : Qui vas nous permettre de hacher notre mot de passe on l'install avec la commande = npm install bcrypt
+// 2 jsonwebtoken : Qui vas nous permettre de creer un token 
+// Une fois les modules installer 
+
+// On récupère le module bcrypt
+const bcrypt = require ('bcrypt');
+// on récupère le module jsonwebtoken
+const jsonwebtoken = require ('jsonwebtoken');
+// On récupère notre model schema d'utilisateur 
+const User = require ('../models/user');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 
 const bcrypt = require ('bcrypt');
