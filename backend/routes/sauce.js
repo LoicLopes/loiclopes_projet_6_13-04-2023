@@ -1,8 +1,8 @@
-/*
+
 const express = require ('express');
-const auth = require('../middleware/auth');
+//const auth = require('../middleware/auth');
 const router = express.Router();
-const multer = require('../middleware/multer-config');
+//const multer = require('../middleware/multer-config');
 
 
 const stuffCtrl = require ('../controllers/stuff');
@@ -14,5 +14,3 @@ router.get('/:id', auth, stuffCtrl.getOneThing);
 router.get('/', auth, stuffCtrl.getAllThings);
 
 module.exports= router;
-
-*/
