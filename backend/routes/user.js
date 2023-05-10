@@ -1,3 +1,52 @@
+// On vas avoir besoin d'un module special de express pour Creer des routes 
+// On vas donc avoir besoin d'importer express
+const express = require ('express');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 // Récupère le module express
 const express = require('express');
 // Variable qui utilise express avec la methode routeur
@@ -13,3 +62,4 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 module.exports = router;
+*/
