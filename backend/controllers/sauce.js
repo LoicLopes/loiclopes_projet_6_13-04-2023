@@ -1,11 +1,16 @@
 /*
+// Maintenant on vas passer notre model creer prealablement dans le dossier models et le fichier Sauce 
+// On vas donc mettre des sécurités en utilisant deux modules spécifique
+// 1 bcrypt : Qui vas nous permettre de hacher notre mot de passe on l'install avec la commande = npm install bcrypt
+// 2 jsonwebtoken : Qui vas nous permettre de creer un token quand un utilisateur se connect il recoit un token encoder
+//                  Ce qui vas permettre au serveur de verifier les requetes lier par un token pour plus de sécurité
+// Une fois les modules installer 
+const Sauces = require('../models/sauce');
 
-
-const Thing = require('../models/Thing');
 const fs = require('fs');
 
 
-exports.createThing = (req, res, next) => {
+exports.createSauce = (req, res, next) => {
   const thingObjet = JSON.parse(req.body.thing);
   delete thingObjet._id;
   delete thingObjet._userId;
