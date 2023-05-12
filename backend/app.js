@@ -1,31 +1,36 @@
-// Pour creer une application express on vas avoir besoin d'intaller express avec la commande = npm install express 
-// On vas avoir ensuite besoin d'un module pour connecter l'application a la base de donner on vas donc installer mongoose avec la commande = npm install mongoose
-// Une fois les outils installer
+/*Pour créer une application express, on va avoir besoin d'installer express.
+Avec la commande = npm install express
+On va avoir ensuite besoin d'un module pour connecter l'application à la base de données.
+On va donc installer mongoose avec la commande = npm install mongoose
+Une fois les outils installés*/
 
-// On Récupère le module express dans une variable avec la methode "require"
-const express =require('express');
 
-// Variable mongoose = récupere le modules mongoose de nodejs qui sert a acceder a une basse de donnés noSQL
+require("dotenv").config();
+//On récupère le module express dans une variable avec la méthode "require"
+const express = require('express');
+
+// Variable mongoose = récupère le modules mongoose de nodejs qui sert a accéder à une basse de donnés noSQL
 const mongoose = require ('mongoose');
 
-// On créer une Variable app pour creer l'application puis on lui attribut les fonctions de express()
+// On créer une variable app pour créer l'application puis on lui attribut les fonctions de express()
 const app = express();
+
+// Il nous faudra une nouvelle importation dans app.js pour accéder au path de notre serveur
+const path = require ('path');
 
 // On récupère le router user (utilisateur) dans le dossier routes
 const userRoutes =  require ('./routes/user');
 
-// Maintenant que l'application est crée on vas avoir besoin de dire à app de traiter les requetes utilisateur au format json 
-// On vas donc dire a app d'utilise la methode express.json() il existe une ancienne methode qui s'apelle body.parser()
-/* app utilise (express.json) pour pouvoir acceder au corp de la requête (toute les requetes qui on une content type json)
-et nous met a disposition se contenue dans req.body */
+// On récupère le router sauces  dans le dossier routes
+const sauceRoutes = require('./routes/sauce');
 
 
-// Définit un identifiant de la base de donnée pour que l'API se connect a cette base de données MongoDB
+// Définis un identifiant de la base de données pour que l'API se connecte a cette base de données MongoDB
 //login mongoose :
-let user='lopesloic64';
-let password='bayonne';
-let cluster='sauce.txezxlg.mongodb.net';
-let dbname='thing';
+let user=process.env.DB_USER;
+let password=process.env.DB_PASSWORD;
+let cluster=process.env.DB_CLUSTER;
+let dbname=process.env.DB_NAME;
 // db = 'mongodb+srv://'lopesloic64':'bayonne'@'sauce.txezxlg.mongodb.net'/'thing'?retryWrites=true&w=majority'
 let db= 'mongodb+srv://' + user + ':' + password + '@' + cluster + '/' + dbname + '?retryWrites=true&w=majority';
 mongoose.connect(db,
@@ -36,12 +41,13 @@ mongoose.connect(db,
 
 
 
-//Gestion des CORS "CrossOrigin Resource Sharing"//
-/*Système de sécuriter qui bloque par défault les appels HTTP entre des serveur différents*/
-/* On vas donc ajouter des ENTETE (header) a notre application pour dire que tout vas bien pour que tout le monde puisse utilise l'API*/
 
-// app utilise(requete , response, suivant) puis une fonction flecher pour 
-//CORS
+//Gestion des CORS "CrossOrigin Resource Sharing"//
+/*Système de sécurité qui bloque par défaut les appels HTTP entre des serveur différents*/
+/*On va donc ajouter des ENTÊTE (header) à notre application 
+pour dire que tout vas bien, et que tout le monde puisse utiliser l'API*/
+// App utilise(requête, réponse, suivant) puis une fonction flecher  
+//  On définit les ENTÊTE result
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -52,142 +58,34 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
+
+/*Maintenant, que l'application est créée, on va avoir besoin de dire à app de traiter les requêtes utilisateur au format json 
+On va donc dire a app d'utiliser la méthode express.json() il existe une ancienne méthode qui s'apelle body.parser()
+app utilise (express.json) pour pouvoir accéder au corps de la requête (toute les requêtes qui ont une content type json)
+Et nous met à disposition ce contenu dans req.body */
 app.use(express.json());
 
 // Puis app vas l'utiliser 
 // 1 On lui attribut le chemin de l'api
-// 2 Nn lui attribut la variable qui a importer le fichier router
+// 2 On lui attribut la variable qui importe le fichier router (pour l'user)
 app.use('/api/auth', userRoutes);
 
-
-// On récupère le router sauces  dans le dossier routes
-// const sauceRoutes = require('./routes/sauce');
-// app utilise 
-//app.use('/api/stuff', stuffRoutes);
-
-
-  // app utilise
-  //app.use('/image', express.static(this.path.join(__dirname, 'images')));
+// Puis app vas l'utiliser 
+// 1 On lui attribut le chemin de l'api
+// 2 On lui attribut la variable qui importe le fichier router (pour les sauces)
+app.use('/api/sauces', sauceRoutes);
 
 
-
+// Puis app vas utiliser 
+// 1 On lui attribut la route /image
+// 2 On lui attribut le middleware static qui est fournis pas express pour gérer les images dans le dossier de façon static
+// 3 On récupère l'image avec path qu'on a importé préalablement 
+// 4 On join l'image dans le dossier 
+// 5 On défini notre sous-répertoire de notre répertoire de base avec (__dirname)
+// 6 Puis on attribut le nom de notre sous répertoire donc 'images'
+app.use('/image', express.static(path.join(__dirname, 'images')));
 
 // On exporte le module app pour y avoir acces dans d'autre fichier tels que server.js pour que le serveur tourne correctement 
 module.exports = app;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// Récupère le module express
-const express =require('express');
-// Récupère le modules Mongoose
-const mongoose = require('mongoose');
-// Variable app : Utilise express
-const app = express();
-
-
-// const sauceRoutes = require('./routes/sauce');
-
-// const user Routes =  require ('./routes/user');
-
-// login mongoose :
-let user='lopesloic64';
-let password='bayonne';
-let cluster='sauce.txezxlg.mongodb.net';
-let dbname='thing';
-// db = 'mongodb+srv://'lopesloic64':'bayonne'@'sauce.txezxlg.mongodb.net'/'thing'?retryWrites=true&w=majority'
-let db= 'mongodb+srv://' + user + ':' + password + '@' + cluster + '/' + dbname + '?retryWrites=true&w=majority';
-mongoose.connect(db,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie!'))                                              
-  .catch((e) => console.log(e));
-
-
-// app utilise ...........
-app.use(express.json()); 
-// App utilise (middleware)
-app.use((req, res, next) => {
-    // 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    //
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    //
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    //
-    next();
-  });
-  
-  // app utilise 
-  //app.use('/api/stuff', stuffRoutes);
-
-  // app utilise
-  //app.use('/api/auth', userRoutes);
-
-  // app utilise
-  //app.use('/image', express.static(this.path.join(__dirname, 'images')));
-
-
-// export app pour l'utiliser dans les autres fichiés
-module.exports = app;
-*/
